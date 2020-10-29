@@ -54,6 +54,9 @@ public class IntakeAndOutake extends SubsystemBase {
   // returns 3 if 
  
   private int powerCellCount = 0; 
+  
+  private boolean disable = false;
+  private boolean reversing = false;
 
   public IntakeAndOutake() {
     intake = new TalonSRX(Constants.INTAKE_PRIMARY);
@@ -256,6 +259,8 @@ public class IntakeAndOutake extends SubsystemBase {
     intake.set(ControlMode.PercentOutput, 0.0);
     load1.set(ControlMode.PercentOutput, 0.0);
     load2.set(ControlMode.PercentOutput, 0.0);
+  
+    reversing = false;
   }
 
   public void shooterStop() {
