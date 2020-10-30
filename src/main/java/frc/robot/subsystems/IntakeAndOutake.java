@@ -102,32 +102,24 @@ public class IntakeAndOutake extends SubsystemBase {
 
   public void powerCellCount(){
     // counts power cells in and out so we dont get more than 5
-    boolean isTriggered1 = !sensor1.get(); 
-    boolean isTriggered2 = !sensor3.get(); 
-    boolean holding1 = false;
-    boolean holding2 = false; 
-
-    if(!holding1){
-      if(isTriggered1){
-        holding1 = false;
-      }
-    } else {
-      if(!isTriggered1){
-        holding1 = false;
-        powerCellCount++; 
-      }
-    }
-
-    if(!holding2){
-      if(isTriggered2){
-        holding2 = false;
-      }
-    } else {
-      if(!isTriggered2){
-        holding2 = false;
-        powerCellCount++; 
-      }
-    }
+    boolean isTriggered = !sensor1.get(); 
+    
+    if(!disabler) {
+       if(isTriggered) {
+	  if(!reversing) {
+	     powerCellCount++;
+	  }
+	  else {
+	     powerCellCount--;
+	  }
+	  disabler  = true;
+       }
+     }
+     else if(disabler) {
+        if(!isTriggered) {
+	   disabler = false;
+	}
+     }
 
   SmartDashboard.putNumber("Power Cell Count: ", powerCellCount); 
     
