@@ -55,7 +55,7 @@ public class IntakeAndOutake extends SubsystemBase {
  
   private int powerCellCount = 0; 
   
-  private boolean disable = false;
+  private boolean disabler  = false;
   private boolean reversing = false;
 
   public IntakeAndOutake() {
@@ -145,20 +145,7 @@ public class IntakeAndOutake extends SubsystemBase {
     // If cell gets stuck in the intake
     intake.set(ControlMode.PercentOutput, -speed2);
     load1.set(ControlMode.PercentOutput, -speed);
-
-    boolean isTriggered = !sensor1.get(); 
-    boolean holding = false;
-    if(!holding){
-      if(isTriggered){
-        holding = false;
-      }
-    } else {
-      if(!isTriggered){
-        holding = false;
-        powerCellCount--; 
-      }
-    }
-    SmartDashboard.putNumber("Power Cell Count: ", powerCellCount); 
+    reversing = true; 
   }
 
   public void outake() {
